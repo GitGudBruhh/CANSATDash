@@ -81,11 +81,23 @@ with placeholder_tab1.container():
         placeholder_fig_col.append(c.empty())
 
 with placeholder_tab2.container():
-    status_columns = st.columns(6)
+    st.markdown("## CANSAT Status")
+    status_columns = st.columns(8)
+
+    st.markdown("## Quick Commands")
+    q_comm_columns = st.columns(6)
+
+    st.divider()
+
+    st.markdown("## Terminal")
 
     placeholder_status_columns = []
+    placeholder_q_comm_columns = []
     for c in status_columns:
         placeholder_status_columns.append(c.empty())
+
+    for c in q_comm_columns:
+        placeholder_q_comm_columns.append(c.empty())
 
 st.markdown(
     """
@@ -173,18 +185,38 @@ for seconds in range(200):
         st.write(fig3)
 
     cansat_status = [
-        ["SIM_MODE", "green   "],
-        ["RDY_LNCH", "red"],
-        ["INFLIGHT", "red"],
-        ["PAR_STG1", "red"],
-        ["PAR_STG2", "red"],
-        ["GROUNDED", "red"],
+        ["0 BOOT", "green"],  # BOOT
+        ["1 TEST_MODE", "green"],  # TEST_MODE
+        ["2 LAUNCH_PAD", "red"],  # LAUNCH_PAD
+        ["3 ASCENT", "red"],  # ASCENT
+        ["4 ROCKET_DEPLOY", "red"],  # ROCKET_DEPLOY
+        ["5 DESCENT", "green"],  # DESCENT
+        ["6 AERBRK_RLS", "red"],  # AEROBREAK_RELEASE
+        ["7 IMPACT", "red"],  # IMPACT
     ]
+
     for idx, box in enumerate(placeholder_status_columns):
         box.empty()
         with box:
             st.markdown(
                 f'<div class="rounded-box-{cansat_status[idx][1]}">{cansat_status[idx][0]}</div>',
+                unsafe_allow_html=True,
+            )
+
+    q_comm = [
+        ["STR_T_TLMTRY", "green"],
+        ["STP_T_TLMTRY", "red"],
+        ["BGN_SMLTN", "green"],
+        ["CSTM_SG1", "red"],
+        ["CSTM_SG2", "red"],
+        ["FRC_DPLY_PRCHT", "red"],
+    ]
+
+    for idx, box in enumerate(placeholder_q_comm_columns):
+        box.empty()
+        with box:
+            st.markdown(
+                f'<div class="rounded-box-{q_comm[idx][1]}">{q_comm[idx][0]}</div>',
                 unsafe_allow_html=True,
             )
 
